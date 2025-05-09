@@ -21,8 +21,8 @@ const ProjectFilters: React.FC<ProjectFiltersProps> = ({ onFilterChange }) => {
   const handleFilterChange = (key: keyof ProjectFilter, value: any) => {
     const newFilters = { ...filters, [key]: value };
     
-    // If value is empty, remove the filter
-    if (!value) {
+    // If value is "all", remove the filter
+    if (value === "all") {
       delete newFilters[key];
     }
     
@@ -45,14 +45,14 @@ const ProjectFilters: React.FC<ProjectFiltersProps> = ({ onFilterChange }) => {
             Crop Type
           </label>
           <Select
-            value={filters.cropType || ""}
+            value={filters.cropType || "all"}
             onValueChange={(value) => handleFilterChange("cropType", value)}
           >
             <SelectTrigger>
               <SelectValue placeholder="All crop types" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All crop types</SelectItem>
+              <SelectItem value="all">All crop types</SelectItem>
               {cropTypes.map((type) => (
                 <SelectItem key={type} value={type}>
                   {type}
@@ -67,14 +67,14 @@ const ProjectFilters: React.FC<ProjectFiltersProps> = ({ onFilterChange }) => {
             Location
           </label>
           <Select
-            value={filters.location || ""}
+            value={filters.location || "all"}
             onValueChange={(value) => handleFilterChange("location", value)}
           >
             <SelectTrigger>
               <SelectValue placeholder="All locations" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All locations</SelectItem>
+              <SelectItem value="all">All locations</SelectItem>
               {pakistanLocations.map((location) => (
                 <SelectItem key={location} value={location}>
                   {location}
@@ -89,14 +89,14 @@ const ProjectFilters: React.FC<ProjectFiltersProps> = ({ onFilterChange }) => {
             Minimum ROI
           </label>
           <Select
-            value={filters.minROI?.toString() || ""}
-            onValueChange={(value) => handleFilterChange("minROI", value ? parseInt(value) : null)}
+            value={filters.minROI?.toString() || "all"}
+            onValueChange={(value) => handleFilterChange("minROI", value === "all" ? null : parseInt(value))}
           >
             <SelectTrigger>
               <SelectValue placeholder="Any ROI" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Any ROI</SelectItem>
+              <SelectItem value="all">Any ROI</SelectItem>
               <SelectItem value="10">10% or higher</SelectItem>
               <SelectItem value="15">15% or higher</SelectItem>
               <SelectItem value="20">20% or higher</SelectItem>
@@ -110,14 +110,14 @@ const ProjectFilters: React.FC<ProjectFiltersProps> = ({ onFilterChange }) => {
             Project Status
           </label>
           <Select
-            value={filters.status || ""}
+            value={filters.status || "all"}
             onValueChange={(value) => handleFilterChange("status", value)}
           >
             <SelectTrigger>
               <SelectValue placeholder="All statuses" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All statuses</SelectItem>
+              <SelectItem value="all">All statuses</SelectItem>
               <SelectItem value="pending">Pending</SelectItem>
               <SelectItem value="funded">Funded</SelectItem>
               <SelectItem value="active">Active</SelectItem>
